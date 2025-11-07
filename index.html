@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animales Exóticos e Ilegales en Chile</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #2563eb;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      background-color: #e2e8f0;
+    }
+
+    .search-container input {
+      width: 90%;
+      max-width: 500px;
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 1rem;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 1rem;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #1e293b;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      color: #475569;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #2563eb;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    /* 🔹 Botón flotante de contacto */
+    .contact-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #10b981;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .contact-button:hover {
+      transform: scale(1.05);
+    }
+
+    /* 🔹 Menú emergente */
+    .contact-menu {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      display: none;
+      animation: fadeIn 0.2s;
+    }
+
+    .contact-menu a {
+      display: block;
+      text-decoration: none;
+      color: #1e293b;
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      transition: background 0.2s;
+    }
+
+    .contact-menu a:hover {
+      background-color: #f1f5f9;
+    }
+
+    .contact-menu a:last-child {
+      border-bottom: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🐾 Animales Exóticos e Ilegales en Chile</h1>
+    <p style="font-size:0.9rem;">Información de referencia — consulta siempre al SAG para confirmación legal</p>
+  </header>
+
+  <div class="search-container">
+    <input type="text" id="search" placeholder="🔍 Buscar animal por nombre o tipo..." />
+  </div>
+
+  <div class="container" id="animalContainer"></div>
+
+  <footer>
+    <p>© 2025 - Datos de ejemplo | Fuentes: SAG Chile, MMA | Uso educativo</p>
+  </footer>
+
+  <!-- 🔹 Botón flotante -->
+  <button class="contact-button" id="contactButton">📞</button>
+
+  <!-- 🔹 Menú de opciones -->
+  <div class="contact-menu" id="contactMenu">
+    <a href="tel:+56912345678">📱 Llamar al SAG</a>
+    <a href="https://wa.me/56912345678?text=Hola%2C+quisiera+consultar+sobre+la+tenencia+de+animales+ex%C3%B3ticos" target="_blank">
+      💬 Enviar WhatsApp
+    </a>
+  </div>
+
+  <script>
+    const animales = [
+      {
+        nombre: "Tortuga de orejas rojas",
+        cientifico: "Trachemys scripta elegans",
+        categoria: "Reptil",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Tortuga acuática popular como mascota; puede volverse invasora en cuerpos de agua.",
+        imagen:
+          "https://plus.unsplash.com/premium_photo-1737637426253-66e02cc6c85f?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dG9ydHVnYSUyMGRlJTIwb3JlamFzJTIwcm9qYXN8ZW58MHx8MHx8fDA%3D&ixlib=rb-4.1.0&q=60&w=3000",
+      },
+      {
+        nombre: "Perico de collar",
+        cientifico: "Psittacula krameri",
+        categoria: "Ave",
+        estado: "🟧 Exótico regulado(solo con permiso CITES/SAG)",
+        descripcion:
+          "Ave verde que puede establecerse en entornos urbanos; en algunos países es invasora.",
+        imagen:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Psittacula_krameri_-Karnataka%2C_India-8.jpg/960px-Psittacula_krameri_-Karnataka%2C_India-8.jpg",
+      },
+      {
+        nombre: "Coipo (nutria roedora)",
+        cientifico: "Myocastor coypus",
+        categoria: "Mamífero",
+        estado: "🟩 Nativo protegido",
+        descripcion:
+          "Roedor semiacuático; su tenencia requiere autorización del SAG y no se permite como mascota común.",
+        imagen:
+          "https://upload.wikimedia.org/wikipedia/commons/d/da/Myocastor_coypus_-_ragondin.jpg",
+      },
+      {
+        nombre: "Zorro del desierto (Fennec Fox)",
+        cientifico: "Vulpes zerda",
+        categoria: "Mamífero",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Pequeño zorro africano; su tenencia está prohibida en Chile por ser especie exótica.",
+        imagen:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Fennec_Fox_Vulpes_zerda.jpg/1200px-Fennec_Fox_Vulpes_zerda.jpg",
+      },
+      {
+        nombre: "Serpiente Pitón Real (Python regius)",
+        cientifico: "Python regius",
+        categoria: "Reptil",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Serpiente popular en el comercio internacional de reptiles; requiere permisos especiales.",
+        imagen:
+          "https://www.zooplus.es/magazine/wp-content/uploads/2023/04/piton-bola.webp",
+      },
+      {
+        Nombre: "Mono capuchino (Cebus apella)",
+        Cientifico: "Python regius",
+        categoria: "Reptil",
+       estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Está protegido; su tenencia está prohibida sin autorización científica/Riesgo: Transmisión de enfermedades zoonóticas (como hepatitis o tuberculosis).",
+        imagen: 
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Cebus_apella.jpg/1200px-Cebus_apella.jpg",
+      },
+      {
+        nombre: "Erizo pigmeo africano (Atelerix albiventris)",
+        cientifico: "Python regius",
+        categoria: "Reptil",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Especie exótica no permitida por el SAG desde 2019/Riesgo: Potencial transmisor de hongos y bacterias a humanos; abandono de mascotas genera colonias ferales.",
+        imagen:
+          "https://upload.wikimedia.org/wikipedia/commons/1/1b/Atelerix_albiventris_in_Spain.jpg",
+      },
+      {
+        nombre: "Guacamayo azul y amarillo (Ara ararauna)",
+        cientifico: "Python regius",
+        categoria: "Reptil",
+        estado: "🟧 Exótico regulado(solo con permiso CITES/SAG)",
+        descripcion:
+          "Su comercio está regulado por CITES; en Chile se requiere permiso especial/Riesgo: Tráfico ilegal y pérdida de biodiversidad.",
+        imagen:
+          "https://upload.wikimedia.org/wikipedia/commons/4/46/Ara_ararauna_-South_America-8.jpg",
+      },
+      {
+        nombre: "Iguana verde (Iguana iguana)",
+        cientifico: "Python regius",
+        categoria: "Reptil",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Prohibida su importación y tenencia sin autorización/Riesgo: Puede establecer poblaciones invasoras y transmite salmonel",
+        imagen:
+          "https://static.nationalgeographicbrasil.com/files/styles/image_3200/public/green-iguana.jpg?w=1600",
+      },
+      {
+        nombre: "Ardilla exótica (Sciurus carolinensis o similar)",
+        cientifico: "Python regius",
+        categoria: "Reptil",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Altamente invasora, compite con ardillas nativas y daña cultivos/Riesgo: Considerada plaga en varios países.",
+        imagen:
+          "https://www.tiendanimal.es/articulos/wp-content/uploads/2018/01/petauro-1200x764.jpg",
+      },
+      {
+        nombre: "Mapache (Procyon lotor)",
+        cientifico: "Python regius",
+        categoria: "Reptil",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Especie invasora prohibida; muy adaptable y destructiva/Riesgo: Transmisor de rabia y parásitos peligrosos para humanos.",
+        imagen:
+          "https://upload.wikimedia.org/wikipedia/commons/f/fe/Procyon_lotor_%28Common_raccoon%29.jpg",
+      },
+      {
+        nombre: "Camaleón velado (Chamaeleo calyptratus)",
+        cientifico: "Python regius",
+        categoria: "Reptil",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "No autorizado por el SAG/Riesgo: Puede portar parásitos exóticos y requiere cuidados complejos.",
+        imagen:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Chamaeleo_calyptratus_01.jpg/1200px-Chamaeleo_calyptratus_01.jpg",
+      },
+      {
+        nombre: "Suricata (Suricata suricatta)",
+        cientifico: "Python regius",
+        categoria: "Reptil",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Animal salvaje que no puede domesticarse; su importación es ilegal/Riesgo: Conductas agresivas, zoonosis y estrés en cautiverio.",
+        imagen:
+          "https://static.inaturalist.org/photos/288911228/large.jpg",
+      },
+      {
+        nombre: "Boa constrictora (Boa constrictor)",
+        cientifico: "Python regius",
+        categoria: "Reptil",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Riesgo alto por escapes y reproducción no controlada/Riesgo: Puede convertirse en depredador invasor y es peligrosa en hogares.",
+        imagen:
+          "https://upload.wikimedia.org/wikipedia/commons/9/9b/B._constrictor.jpg",
+      },
+      {
+        nombre: "Cocodrilo del Nilo (Crocodylus niloticus)",
+        cientifico: "Python regius",
+        categoria: "Reptil",
+        estado: "🟥 Prohibido en Chile",
+        descripcion:
+          "Especie peligrosa y no autorizada en Chile/Riesgo: Amenaza a la seguridad humana y requiere condiciones imposibles",
+        imagen:
+          "https://www.fishipedia.es/wp-content/uploads/2021/04/Crocodylus-niloticus_3.jpg",
+      },
+    ];
+
+    const container = document.getElementById("animalContainer");
+    const searchInput = document.getElementById("search");
+
+    function mostrarAnimales(lista) {
+      container.innerHTML = "";
+      lista.forEach((animal) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${animal.imagen}" alt="${animal.nombre}">
+          <div class="card-content">
+            <h3>${animal.nombre}</h3>
+            <p><strong>Nombre científico:</strong> ${animal.cientifico}</p>
+            <p><strong>Categoría:</strong> ${animal.categoria}</p>
+            <p><strong>Estado:</strong> ${animal.estado}</p>
+            <p>${animal.descripcion}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener("input", (e) => {
+      const texto = e.target.value.toLowerCase();
+      const filtrados = animales.filter(
+        (a) =>
+          a.nombre.toLowerCase().includes(texto) ||
+          a.categoria.toLowerCase().includes(texto) ||
+          a.estado.toLowerCase().includes(texto)
+      );
+      mostrarAnimales(filtrados);
+    });
+
+    // Mostrar todos al inicio
+    mostrarAnimales(animales);
+
+    // 🔹 Lógica del botón flotante
+    const contactButton = document.getElementById("contactButton");
+    const contactMenu = document.getElementById("contactMenu");
+
+    contactButton.addEventListener("click", () => {
+      const visible = contactMenu.style.display === "block";
+      contactMenu.style.display = visible ? "none" : "block";
+    });
+
+    // Cerrar menú si se hace clic fuera
+    document.addEventListener("click", (e) => {
+      if (!contactButton.contains(e.target) && !contactMenu.contains(e.target)) {
+        contactMenu.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
